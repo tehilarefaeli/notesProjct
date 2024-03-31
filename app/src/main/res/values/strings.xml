@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">NotesApp</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Don\'t have any account? please click here!</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="login_successfully">Login successfully</string>
+    <string name="error">Error!</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="Register">Sign Up</string>
+    <string name="notes_introduce">Notes+ Introduce</string>
+    <string name="create_profile_success">Create profile is successfully</string>
+</resources>

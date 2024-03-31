@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "384099431604",
+    "project_id": "my-notes-bfeaf",
+    "storage_bucket": "my-notes-bfeaf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:384099431604:android:901be5fd5a541315ae53e1",
+        "android_client_info": {
+          "package_name": "com.example.notesapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMUPzIyDdjQS5Q3Q6cJKC4mpTkN4FOLTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
