@@ -3,5 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#FF5722</color>
+    <color name="notebackColor">#F1DA95</color>
+    <color name="noteTitle">#DB9455</color>
+    <color name="api_button">#824D0A</color>
+    <color name="buttons">#D4B082</color>
 
 </resources>

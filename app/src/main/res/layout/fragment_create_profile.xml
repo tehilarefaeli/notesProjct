@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"
-        app:cardBackgroundColor="#FF5722"
+        app:cardBackgroundColor="#FF8E704B"
         app:cardCornerRadius="15dp">
 
         <ImageView
@@ -23,7 +23,7 @@
             android:background="#EAE3E3"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_profile"
-            app:cardBackgroundColor="#F4F2EF" />
+            app:cardBackgroundColor="#FF8E704B" />
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
@@ -40,9 +40,9 @@
 
         <ImageView
             android:id="@+id/gallery"
-            android:src="@drawable/baseline_add_a_photo_24"
-            android:layout_width="40dp"
-            android:layout_height="40dp"/>
+            android:src="@drawable/baseline_add_photo_alternate_24"
+            android:layout_width="46dp"
+            android:layout_height="46dp"/>
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout

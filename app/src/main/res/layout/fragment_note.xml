@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".noteFragment">
+
+
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/btnFeedBottomBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/baseline_border_all_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all_notes" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnFavoritesBottomBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/heart_full"
+                android:text="Home"
+                app:tint="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/favorites" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnProfileBottomBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/person"
+                android:text="Home" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/noteCard"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        tools:ignore="MissingConstraints"
+        android:orientation="horizontal"/>
+    <ScrollView
+        android:id="@+id/noteContent"
+        android:background="@color/notebackColor"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        tools:ignore="MissingConstraints"
+        android:layout_margin="10dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="54dp">
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/noteTitle"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+
+        android:text="@string/titleNote"
+        android:textStyle="bold"
+        android:background="@color/noteTitle"
+        tools:layout_editor_absoluteY="34dp"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:layout_width="972dp"
+        android:layout_height="1879dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="131dp">
+
+        <ImageView
+            android:id="@+id/editNote"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="360dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/edit" />
+
+        <ImageView
+            android:id="@+id/deleteNote"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/delete" />
+    </LinearLayout>
+
+    />
+
+</FrameLayout>
