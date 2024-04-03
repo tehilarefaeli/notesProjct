@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.fragment.findNavController
 import com.example.notesapp.R
 import com.example.notesapp.databinding.FragmentCreateProfileBinding
 
@@ -52,7 +53,8 @@ class CreateProfileFragment : Fragment() {
     ): View {
         binding = FragmentCreateProfileBinding.inflate(inflater)
         binding.camera.setOnClickListener {
-            openCamera()
+            startActivity(Intent(requireContext(), LocationActivity::class.java))
+            //openCamera()
         }
         binding.gallery.setOnClickListener {
             openGallery()
@@ -70,6 +72,7 @@ class CreateProfileFragment : Fragment() {
             when(it) {
                 is Resource.OnSuccess -> {
                     Toast.makeText(requireContext(), getString(R.string.create_profile_success), Toast.LENGTH_LONG).show()
+                    findNavController().popBackStack()
                 }
                 is Resource.OnError -> {
                     AlertDialog.Builder(requireContext())

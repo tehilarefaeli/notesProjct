@@ -11,6 +11,9 @@
 
         <action android:id="@+id/login_to_create_action"
             app:destination="@+id/create_profile"/>
+        <action
+            android:id="@+id/action_login_to_listNotesFragment"
+            app:destination="@id/listNotesFragment" />
     </fragment>
 
     <fragment android:id="@+id/create_profile"
@@ -20,5 +23,20 @@
         <action android:id="@+id/create_profile_to_login"
             app:destination="@+id/login"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/listNotesFragment"
+        android:name="com.example.notesapp.MyListNotesFragment"
+        android:label="fragment_list_notes"
+        tools:layout="@layout/fragment_list_notes" >
+        <action
+            android:id="@+id/action_listNotesFragment_to_addNoteFragment"
+            app:destination="@id/addNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="com.example.notesapp.AddNoteFragment"
+        android:label="fragment_add_note"
+        tools:layout="@layout/fragment_add_note" />
 
 </navigation>

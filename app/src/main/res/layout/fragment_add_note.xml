@@ -75,7 +75,7 @@
                 android:gravity="top|start"
                 android:inputType="textMultiLine"
                 android:maxLines="10"
-                android:minLines="5"
+                  android:minLines="5"
                 android:scrollbars="vertical" />
         </com.google.android.material.textfield.TextInputLayout>
 

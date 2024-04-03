@@ -6,14 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.notesapp.databinding.FragmentAllNotesBinding
 
-class ListNotesFragment : Fragment() {
+class AllNotesFragmentFragment : Fragment() {
 
     companion object {
-        fun newInstance() = ListNotesFragment()
+        fun newInstance() = AllNotesFragmentFragment()
     }
 
-    private val viewModel: ListNotesViewModel by viewModels()
+    private val viewModel: AllNotesViewModel by viewModels()
+    private lateinit var binding: FragmentAllNotesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,7 @@ class ListNotesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_list_notes, container, false)
+        binding = FragmentAllNotesBinding.inflate(inflater)
+        return inflater.inflate(R.layout.fragment_all_notes, container, false)
     }
 }

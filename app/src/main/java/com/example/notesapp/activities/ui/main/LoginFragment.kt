@@ -13,6 +13,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.notesapp.R
 import com.example.notesapp.databinding.FragmentMainBinding
+import com.example.notesapp.sharedPreferences
+import com.example.notesapp.user
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
 
@@ -44,6 +47,9 @@ class LoginFragment : Fragment() {
             when(resource) {
                 is Resource.OnSuccess -> {
                     Toast.makeText(requireContext(), getString(R.string.login_successfully), Toast.LENGTH_LONG).show()
+                    if(sharedPreferences.user != null) {
+                        findNavController().navigate(R.id.action_login_to_listNotesFragment)
+                    }
                 }
                 is Resource.OnError -> {
                     AlertDialog.Builder(requireContext())
@@ -60,6 +66,14 @@ class LoginFragment : Fragment() {
 
         binding?.signUp?.setOnClickListener {
             findNavController().navigate(R.id.login_to_create_action)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if(FirebaseAuth.getInstance().currentUser != null) {
+            //findNavController().navigate(R.id.action_login_to_listNotesFragment)
         }
     }
 
