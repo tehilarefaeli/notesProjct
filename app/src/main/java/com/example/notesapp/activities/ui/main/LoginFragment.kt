@@ -73,8 +73,7 @@ class LoginFragment : Fragment() {
         super.onResume()
 
         if(FirebaseAuth.getInstance().currentUser != null) {
-            //findNavController().navigate(R.id.action_login_to_listNotesFragment)
+            findNavController().navigate(R.id.action_login_to_listNotesFragment)
         }
     }
-
 }

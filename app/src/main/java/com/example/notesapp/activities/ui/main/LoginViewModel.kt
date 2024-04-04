@@ -31,4 +31,10 @@ class LoginViewModel : ViewModel() {
                 }
         }
     }
+
+    fun logout() {
+        FirebaseAuth.getInstance().signOut()
+        sharedPreferences.user = null
+        resourceLD.postValue(Resource.OnSuccess())
+    }
 }

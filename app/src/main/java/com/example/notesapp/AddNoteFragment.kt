@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.notesapp.activities.ui.main.Resource
+import com.example.notesapp.activities.ui.main.models.Note
 import com.example.notesapp.databinding.ActivityMainBinding
 import com.example.notesapp.databinding.FragmentAddNoteBinding
 import com.example.notesapp.databinding.FragmentCreateProfileBinding
@@ -18,6 +19,7 @@ class AddNoteFragment : Fragment() {
     private lateinit var binding : FragmentAddNoteBinding
 
     companion object {
+        var noteToEdit: Note? = null
         fun newInstance() = AddNoteFragment()
     }
 
@@ -40,10 +42,17 @@ class AddNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+         noteToEdit?.let {
+                binding.etPostTitle.setText(it.title)
+                binding.etPostContent.setText(it.content)
+            }
+
         binding.btnSharePost.setOnClickListener {
             viewModel.sharePost(
-                binding.etPostTitle.text.toString()
-                ,binding.etPostContent.text.toString())
+                binding.etPostTitle.text.toString(),
+                binding.etPostContent.text.toString(),
+                noteToEdit?.id
+            )
         }
 
         viewModel.resourceLD.observe(viewLifecycleOwner) { resource ->
@@ -61,7 +70,13 @@ class AddNoteFragment : Fragment() {
                 is AddNoteViewModel.NoteResource.OnListUpdate -> {
 
                 }
+                is AddNoteViewModel.NoteResource.OnUpdate -> {
+                    noteToEdit = null
+                    Toast.makeText(requireContext(), getString(R.string.post_update_successfully), Toast.LENGTH_LONG).show()
+                    findNavController().popBackStack()
+                }
             }
         }
     }
+
 }

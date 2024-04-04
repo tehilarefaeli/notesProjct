@@ -20,6 +20,7 @@
     <string name="profile">Profile</string>
     <string name="titleNote">Title</string>
     <string name="add_new_note">Add Note</string>
+    <string name="post_update_successfully">Note data update successfully</string>
     <string name="post_shared_successfully">Post shared successfully</string>
     <string name="person">Person</string>
     <string name="enter_your_location">Entrt your location</string>

@@ -13,7 +13,7 @@ class AddNoteViewModel : ViewModel() {
     val resourceLD: MutableLiveData<NoteResource> = MutableLiveData()
     val DEFAULT_USER_ID = "default_user_id"
 
-    fun sharePost(title: String, content: String) {
+    fun sharePost(title: String, content: String, noteId: String? = null) {
         var errorMsg = ""
         if (title.isEmpty()) {
             errorMsg+="Title field is missing.\n"
@@ -28,7 +28,11 @@ class AddNoteViewModel : ViewModel() {
             return
         }
 
-        addNewNote(title, content)
+        if(noteId != null) {
+            editNote(noteId, title, content)
+        }else {
+            addNewNote(title, content)
+        }
     }
 
     private fun addNewNote(title: String, content: String) {
@@ -44,7 +48,7 @@ class AddNoteViewModel : ViewModel() {
             .add(note)
             .addOnSuccessListener { documentReference ->
                 // Note added successfully
-                resourceLD.postValue(NoteResource.OnAdded())
+                resourceLD.postValue(NoteResource.OnAdded)
             }
             .addOnFailureListener { e ->
                 // Failed to add note
@@ -72,10 +76,43 @@ class AddNoteViewModel : ViewModel() {
             }
     }
 
+    fun editNote(noteId: String, newTitle: String, newContent: String) {
+        val db = FirebaseFirestore.getInstance()
+        val noteUpdateMap = mapOf(
+            "title" to newTitle,
+            "content" to newContent,
+            "lastModified" to FieldValue.serverTimestamp() // Optionally update a lastModified field
+        )
+
+        db.collection("notes").document(noteId)
+            .update(noteUpdateMap)
+            .addOnSuccessListener {
+                resourceLD.postValue(NoteResource.OnUpdate) // Consider creating and posting a more appropriate resource state
+            }
+            .addOnFailureListener { e ->
+                resourceLD.postValue(NoteResource.OnError("Failed to update note: ${e.message}"))
+            }
+    }
+
+    fun deleteNote(noteId: String) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("notes").document(noteId)
+            .delete()
+            .addOnSuccessListener {
+                resourceLD.postValue(NoteResource.OnListUpdate(notesList)) // Consider creating and posting a more appropriate resource state
+            }
+            .addOnFailureListener { e ->
+                resourceLD.postValue(NoteResource.OnError("Failed to delete note: ${e.message}"))
+            }
+    }
+
     sealed class NoteResource {
-        class OnAdded : NoteResource()
+        data object OnUpdate : NoteResource()
+        data object  OnAdded : NoteResource()
         data class OnError(val error: String) : NoteResource()
         data class OnListUpdate(val notes: List<Note>) : NoteResource() // Assuming you have a Note data class
     }
+
+
 
 }

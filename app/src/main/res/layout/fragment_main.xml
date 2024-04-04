@@ -15,7 +15,8 @@
         android:gravity="center"
         android:textColor="#FF8E704B"
         android:layout_marginBottom="30dp"
-        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textSize="30sp"
         android:text="@string/notes_introduce" />
 
     <com.google.android.material.textfield.TextInputLayout

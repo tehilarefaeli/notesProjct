@@ -7,5 +7,6 @@
     <color name="noteTitle">#DB9455</color>
     <color name="api_button">#824D0A</color>
     <color name="buttons">#D4B082</color>
+    <color name="button_clicked">#7A4F10</color>
 
 </resources>

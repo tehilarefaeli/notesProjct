@@ -13,6 +13,8 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="8dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/border_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,20 +30,6 @@
             android:textSize="24sp"
             android:textColor="#784606"
             android:textStyle="bold" />
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/api_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="@android:color/transparent"
-            android:text="@string/api_button"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:cornerRadius="16dp"
-            app:strokeColor="@color/black"
-            app:strokeWidth="1dp" />
 
 
         <com.google.android.material.textfield.TextInputLayout

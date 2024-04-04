@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,6 +45,7 @@ class MyListNotesFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         binding.addNote.setOnClickListener {
+            AddNoteFragment.noteToEdit = null
             findNavController().navigate(R.id.action_listNotesFragment_to_addNoteFragment)
         }
 
@@ -58,29 +60,27 @@ class MyListNotesFragment : Fragment() {
                 is AddNoteViewModel.NoteResource.OnListUpdate -> {
                     setNotesAdapter()
                 }
+                is AddNoteViewModel.NoteResource.OnUpdate -> {
+                    notesAdapter.notifyDataSetChanged()
+                }
             }
         }
         viewModel.listenToNotesChanges()
     }
 
     private fun setNotesAdapter() {
-        notesAdapter = NotesAdapter(viewModel.notesList)
+        notesAdapter = NotesAdapter(viewModel.notesList, object : NoteActionListener {
+            override fun onEditClicked(noteId: String) {
+                AddNoteFragment.noteToEdit = viewModel.notesList.find { it.id == noteId }
+                findNavController().navigate(R.id.action_listNotesFragment_to_addNoteFragment)
+             }
+
+            override fun onDeleteClicked(noteId: String) {
+                viewModel.deleteNote(noteId)
+            }
+        })
         recyclerView.adapter = notesAdapter
     }
-
-    private fun setNotesListToTextView() {
-
-        val stringBuilder = StringBuilder()
-        stringBuilder.append("<ul>")
-        for (note in viewModel.notesList) {
-            stringBuilder.append("<li><b>${note.title}</b><br>${note.content}</li>")
-        }
-        stringBuilder.append("</ul>")
-
-        //binding.tvNotes.text = Html.fromHtml(stringBuilder.toString(), Html.FROM_HTML_MODE_COMPACT)
-    }
-
-
 
     override fun onResume() {
         super.onResume()
@@ -88,25 +88,47 @@ class MyListNotesFragment : Fragment() {
         setNotesAdapter()
     }
 
+    interface NoteActionListener {
+        fun onEditClicked(noteId: String)
+        fun onDeleteClicked(noteId: String)
+
+    }
     // NoteViewHolder.kt
-    class NoteViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class NoteViewHolder(view: View, private val listener: NoteActionListener): RecyclerView.ViewHolder(view) {
         private val titleTextView: TextView = view.findViewById(R.id.note_title)
         private val contentTextView: TextView = view.findViewById(R.id.note_content)
+        private val ivDelete: ImageView = view.findViewById(R.id.iv_delete)
+        private val ivEdit: ImageView = view.findViewById(R.id.iv_edit)
         // Populate other views if needed
+
+        init {
+            ivEdit.setOnClickListener {
+                val noteId = it.tag?.toString()  ?: return@setOnClickListener
+                listener.onEditClicked(noteId)
+            }
+
+            ivDelete.setOnClickListener {
+                val noteId = it.tag?.toString() ?: return@setOnClickListener
+                listener.onDeleteClicked(noteId)
+            }
+        }
 
         fun bind(note: Note) {
             titleTextView.text = note.title
             contentTextView.text = note.content
             // Set other views as needed
+
+            ivEdit.tag = note.id
+            ivDelete.tag = note.id
         }
     }
 
     // NotesAdapter.kt
-    class NotesAdapter(private val notes: List<Note>): RecyclerView.Adapter<NoteViewHolder>() {
+    class NotesAdapter(private val notes: List<Note>, private val listener: NoteActionListener): RecyclerView.Adapter<NoteViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.note_list_item, parent, false)
-            return NoteViewHolder(view)
+            return NoteViewHolder(view,listener)
         }
 
         override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
