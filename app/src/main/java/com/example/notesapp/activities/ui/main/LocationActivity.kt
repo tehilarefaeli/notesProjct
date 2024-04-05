@@ -1,5 +1,7 @@
 package com.example.notesapp.activities.ui.main
 
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -35,6 +37,7 @@ class LocationActivity : AppCompatActivity() {
     private var address: Address ?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        locationProvider = LocationServices.getFusedLocationProviderClient(this)
         findMyLocationIfHasAccess()
         binding = ActivityLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -44,11 +47,16 @@ class LocationActivity : AppCompatActivity() {
             insets
         }
 
-        locationProvider = LocationServices.getFusedLocationProviderClient(this)
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync {
             googleMap = it
             markMyLocation()
+        }
+        binding.save.setOnClickListener {
+            val intent = Intent()
+            intent.putExtra("address", address)
+            setResult(Activity.RESULT_OK, intent)
+            finish()
         }
         binding.search.setOnQueryTextListener(object : OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -56,7 +64,6 @@ class LocationActivity : AppCompatActivity() {
                     val geoCoder = Geocoder(this@LocationActivity, Locale.getDefault())
                     try {
                         val addressList = geoCoder.getFromLocationName(query, 1)
-
                             addressList?.takeIf { it.size > 0 }?.let {
                                 val lan = com.google.android.gms.maps.model.LatLng(
                                     it.get(0).latitude,

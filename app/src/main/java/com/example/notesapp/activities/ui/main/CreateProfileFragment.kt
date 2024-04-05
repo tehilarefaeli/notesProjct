@@ -51,8 +51,7 @@ class CreateProfileFragment : Fragment() {
     private val locationLauncher :ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){result ->
         if (result.resultCode == Activity.RESULT_OK){
-            binding.location.setText((result.data?.extras?.getParcelable("address") as? Address)?.getAddressLine(0))
-            binding.profileImage.setImageBitmap(bitmap)
+            binding.location.setText((result.data?.getParcelableExtra("address") as? Address)?.getAddressLine(0))
         }
     }
 
@@ -63,7 +62,7 @@ class CreateProfileFragment : Fragment() {
     ): View {
         binding = FragmentCreateProfileBinding.inflate(inflater)
         binding.camera.setOnClickListener {
-            //openCamera()
+            openCamera()
         }
         binding.gallery.setOnClickListener {
             openGallery()
