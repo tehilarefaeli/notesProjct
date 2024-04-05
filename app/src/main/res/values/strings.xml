@@ -24,4 +24,5 @@
     <string name="post_shared_successfully">Post shared successfully</string>
     <string name="person">Person</string>
     <string name="enter_your_location">Entrt your location</string>
+    <string name="logout">Log Out</string>
 </resources>

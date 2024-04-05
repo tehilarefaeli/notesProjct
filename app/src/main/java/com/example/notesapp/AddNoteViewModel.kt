@@ -106,6 +106,7 @@ class AddNoteViewModel : ViewModel() {
             }
     }
 
+
     sealed class NoteResource {
         data object OnUpdate : NoteResource()
         data object  OnAdded : NoteResource()

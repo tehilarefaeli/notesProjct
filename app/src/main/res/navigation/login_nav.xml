@@ -27,18 +27,26 @@
     <fragment
         android:id="@+id/listNotesFragment"
         android:name="com.example.notesapp.MyListNotesFragment"
-        android:label="fragment_list_notes"
+        android:label="List notes"
         tools:layout="@layout/fragment_list_notes" >
         <action
             android:id="@+id/action_listNotesFragment_to_addNoteFragment"
             app:destination="@id/addNoteFragment" />
+        <action
+            android:id="@+id/action_listNotesFragment_to_login"
+            app:destination="@id/login" />
     </fragment>
 
     <fragment
 
         android:id="@+id/addNoteFragment"
         android:name="com.example.notesapp.AddNoteFragment"
-        android:label="fragment_add_note"
-        tools:layout="@layout/fragment_add_note" />
+        android:label="Add your note"
+
+        tools:layout="@layout/fragment_add_note" >
+        <action
+            android:id="@+id/action_addNoteFragment_to_listNotesFragment"
+            app:destination="@id/listNotesFragment" />
+    </fragment>
 
 </navigation>

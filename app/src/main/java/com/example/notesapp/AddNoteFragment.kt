@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import com.example.notesapp.activities.ui.main.Resource
 import com.example.notesapp.activities.ui.main.models.Note
@@ -36,8 +37,14 @@ class AddNoteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAddNoteBinding.inflate(inflater)
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){
+            findNavController().navigate(R.id.action_addNoteFragment_to_listNotesFragment)
+        }
+        callback.isEnabled =true
         return binding.root
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
