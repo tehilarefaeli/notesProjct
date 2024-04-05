@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.location.Address
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,6 +18,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.notesapp.R
 import com.example.notesapp.databinding.FragmentCreateProfileBinding
 
@@ -46,6 +48,14 @@ class CreateProfileFragment : Fragment() {
         }
     }
 
+    private val locationLauncher :ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()){result ->
+        if (result.resultCode == Activity.RESULT_OK){
+            binding.location.setText((result.data?.extras?.getParcelable("address") as? Address)?.getAddressLine(0))
+            binding.profileImage.setImageBitmap(bitmap)
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,21 +63,35 @@ class CreateProfileFragment : Fragment() {
     ): View {
         binding = FragmentCreateProfileBinding.inflate(inflater)
         binding.camera.setOnClickListener {
-            startActivity(Intent(requireContext(), LocationActivity::class.java))
             //openCamera()
         }
         binding.gallery.setOnClickListener {
             openGallery()
         }
+        binding.location.setOnClickListener{
+            locationLauncher.launch(Intent(requireContext(), LocationActivity::class.java))
+        }
         binding.signUp.setOnClickListener {
             viewModel.onSignUpClicked(binding.email.text.toString(), binding.password.text.toString(),
-               binding.name.text.toString(), bitmap )
+               binding.name.text.toString(),  binding.location.text.toString(), bitmap )
         }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.userLD.observe(viewLifecycleOwner) {
+            binding.name.setText(it.name)
+            binding.email.setText(it.email)
+            binding.password.visibility = View.GONE
+            binding.email.isEnabled = false
+            binding.signUp.setText("update")
+            Glide.with(requireContext()).load(it.imageUrl)
+                .placeholder(R.drawable.person)
+                .into(binding.profileImage)
+            binding.location.setText(it.location)
+
+        }
         viewModel.resourceLD.observe(viewLifecycleOwner){
             when(it) {
                 is Resource.OnSuccess -> {

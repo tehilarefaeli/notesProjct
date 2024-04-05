@@ -46,7 +46,7 @@ class MyListNotesFragment : Fragment() {
 
         binding.addNote.setOnClickListener {
             AddNoteFragment.noteToEdit = null
-            findNavController().navigate(R.id.action_listNotesFragment_to_addNoteFragment)
+            //findNavController().navigate(R.id.action_listNotesFragment_to_addNoteFragment)
         }
 
         viewModel.resourceLD.observe(viewLifecycleOwner) { resource ->
@@ -72,7 +72,7 @@ class MyListNotesFragment : Fragment() {
         notesAdapter = NotesAdapter(viewModel.notesList, object : NoteActionListener {
             override fun onEditClicked(noteId: String) {
                 AddNoteFragment.noteToEdit = viewModel.notesList.find { it.id == noteId }
-                findNavController().navigate(R.id.action_listNotesFragment_to_addNoteFragment)
+               // findNavController().navigate(R.id.action_listNotesFragment_to_addNoteFragment)
              }
 
             override fun onDeleteClicked(noteId: String) {

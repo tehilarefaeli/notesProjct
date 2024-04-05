@@ -25,4 +25,8 @@
     <string name="person">Person</string>
     <string name="enter_your_location">Entrt your location</string>
     <string name="logout">Log Out</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.notesapp.R
 import com.example.notesapp.databinding.ActivityLocationBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -20,6 +21,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.type.LatLng
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Locale
 
 class LocationActivity : AppCompatActivity() {
 
@@ -48,20 +53,26 @@ class LocationActivity : AppCompatActivity() {
         binding.search.setOnQueryTextListener(object : OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {location->
-                    val geoCoder = Geocoder(this@LocationActivity)
+                    val geoCoder = Geocoder(this@LocationActivity, Locale.getDefault())
                     try {
                         val addressList = geoCoder.getFromLocationName(query, 1)
-                        addressList?.takeIf { it.size > 0 }?.let {
-                            val lan = com.google.android.gms.maps.model.LatLng(
-                                it.get(0).latitude,
-                                it.get(0).longitude
-                            )
-                            googleMap?.clear()
-                            googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(lan, 10f))
-                            googleMap?.addMarker(MarkerOptions().position(lan).title(query))
-                            this@LocationActivity.address = it.get(0)
 
-                        }
+                            addressList?.takeIf { it.size > 0 }?.let {
+                                val lan = com.google.android.gms.maps.model.LatLng(
+                                    it.get(0).latitude,
+                                    it.get(0).longitude
+                                )
+                                googleMap?.clear()
+                                googleMap?.animateCamera(
+                                    CameraUpdateFactory.newLatLngZoom(
+                                        lan,
+                                        10f
+                                    )
+                                )
+                                googleMap?.addMarker(MarkerOptions().position(lan).title(query))
+                                this@LocationActivity.address = it.get(0)
+
+                            }
                     }catch (e: Exception){
                         val x = 0
 
@@ -115,5 +126,15 @@ class LocationActivity : AppCompatActivity() {
                 }catch (e: Exception){}
             }
         }
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        findMyLocation()
     }
 }

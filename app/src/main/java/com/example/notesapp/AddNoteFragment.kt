@@ -38,7 +38,7 @@ class AddNoteFragment : Fragment() {
     ): View {
         binding = FragmentAddNoteBinding.inflate(inflater)
         val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){
-            findNavController().navigate(R.id.action_addNoteFragment_to_listNotesFragment)
+            //findNavController().navigate(R.id.action_addNoteFragment_to_listNotesFragment)
         }
         callback.isEnabled =true
         return binding.root
