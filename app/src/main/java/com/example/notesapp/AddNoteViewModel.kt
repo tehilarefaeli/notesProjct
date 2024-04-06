@@ -76,6 +76,26 @@ class AddNoteViewModel : ViewModel() {
             }
     }
 
+    fun listenToNotesChangesWithOutUser() {
+     //   var userId = sharedPreferences.user?.id ?: DEFAULT_USER_ID
+        val db = FirebaseFirestore.getInstance()
+        db.collection("notes")
+           // .whereEqualTo("author", userId) // Filter by userId or author
+            .addSnapshotListener { snapshots, e ->
+                if (e != null) {
+                    resourceLD.postValue(NoteResource.OnError("Listen failed: ${e.message}"))
+                    return@addSnapshotListener
+                }
+
+                notesList = mutableListOf<Note>()
+                for (doc in snapshots!!) {
+                    val note = doc.toObject(Note::class.java).copy(id = doc.id)
+                    notesList.add(note)
+                }
+                resourceLD.postValue(NoteResource.OnListUpdate(notesList))
+            }
+    }
+
     fun editNote(noteId: String, newTitle: String, newContent: String) {
         val db = FirebaseFirestore.getInstance()
         val noteUpdateMap = mapOf(
