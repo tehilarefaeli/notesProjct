@@ -11,9 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="20dp"
         app:cardBackgroundColor="#FF8E704B"
         app:cardCornerRadius="15dp">
+
+
 
         <ImageView
             android:id="@+id/profile_image"
@@ -99,6 +101,14 @@
             android:id="@+id/password"
             android:hint="@string/enter_your_password"/>
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/logout"
+        app:backgroundTint="#FF8E704B"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_up"

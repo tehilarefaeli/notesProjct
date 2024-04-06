@@ -20,7 +20,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.notesapp.R
+import com.example.notesapp.activities.ui.main.models.User
 import com.example.notesapp.databinding.FragmentCreateProfileBinding
+import com.example.notesapp.sharedPreferences
+import com.example.notesapp.user
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class CreateProfileFragment : Fragment() {
 
@@ -73,6 +78,12 @@ class CreateProfileFragment : Fragment() {
         binding.signUp.setOnClickListener {
             viewModel.onSignUpClicked(binding.email.text.toString(), binding.password.text.toString(),
                binding.name.text.toString(),  binding.location.text.toString(), bitmap )
+        }
+
+        binding?.logout?.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            sharedPreferences.user = null // Set user to null to clear information
+            findNavController().navigate(R.id.login) // Replace with your desired destination
         }
         return binding.root
     }

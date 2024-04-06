@@ -67,11 +67,11 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.login_to_create_action)
         }
 
-        binding?.logout?.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            sharedPreferences.user = null // Set user to null to clear information
-            findNavController().navigate(R.id.login_to_create_action) // Replace with your desired destination
-        }
+//        binding?.logout?.setOnClickListener {
+//            FirebaseAuth.getInstance().signOut()
+//            sharedPreferences.user = null // Set user to null to clear information
+//            findNavController().navigate(R.id.login_to_create_action) // Replace with your desired destination
+//        }
 
     }
 

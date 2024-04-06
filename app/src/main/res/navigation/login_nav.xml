@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_create_profile"
             app:destination="@id/create_profile" />
+        <action
+            android:id="@+id/action_create_profile_to_login"
+            app:destination="@id/login" />
     </fragment>
 
 
