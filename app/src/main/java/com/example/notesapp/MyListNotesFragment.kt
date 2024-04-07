@@ -118,13 +118,11 @@ class MyListNotesFragment : Fragment() {
         fun bind(note: Note) {
             titleTextView.text = note.title
             contentTextView.text = note.content
-//            val bitmap = note.img?.let {
-//                val bytes = it.toByteArray()
-//                BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-//            }
-
-            //ivImg.setImageBitmap(bitmap)
-                // ivImg.tag =note.img
+            if(note.img!=null){
+                // Convert byte array to Bitmap
+                val bitmap = BitmapFactory.decodeByteArray(note.img.toByteArray(), 0, note.img.toByteArray().size)
+                ivImg.setImageBitmap(bitmap)
+            }
             ivEdit.tag = note.id
             ivDelete.tag = note.id
         }

@@ -38,19 +38,35 @@ class AddNoteViewModel : ViewModel() {
         if(noteId != null) {
             editNote(noteId, title, content)
         }else {
-            addNewNote(title, content ,bitmap)
+            bitmap?.let {
+                val imageRef: StorageReference = FirebaseStorage.getInstance().reference.child("users/${noteId}.jpg")
+                val bos = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+                val data = bos.toByteArray()
+                imageRef.putBytes(data)
+                    .addOnSuccessListener {
+                        imageRef.downloadUrl.addOnSuccessListener {
+                            addNewNote(title, content , it.toString())
+                        }.addOnFailureListener {
+                            resourceLD.postValue(NoteResource.OnError(errorMsg))
+                        }
+                    }
+                    .addOnFailureListener{
+                        resourceLD.postValue(NoteResource.OnError(errorMsg))
+                    }
+            } ?: run {
+                addNewNote(title, content , "")
+            }
         }
     }
 
-    private fun addNewNote(title: String, content: String ,bitmap: Bitmap?) {
-        val bos = ByteArrayOutputStream()
-        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, bos)
-        val data = bos.toByteArray()
+    private fun addNewNote(title: String, content: String ,bitmap: String?) {
+
 
         val note = Note(
             title = title,
             content = content,
-            img = data.toString(),
+            img = bitmap,
             author = sharedPreferences.user?.id ?: DEFAULT_USER_ID
         )
 
