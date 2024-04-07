@@ -82,8 +82,10 @@ class CreateProfileFragment : Fragment() {
 
         binding?.logout?.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            sharedPreferences.user = null // Set user to null to clear information
-            findNavController().navigate(R.id.action_create_profile_to_login) // Replace with your desired destination
+            if(sharedPreferences.user !=null) {
+                sharedPreferences.user = null
+            }
+            findNavController().navigate(R.id.action_create_profile_to_login)
         }
         return binding.root
     }

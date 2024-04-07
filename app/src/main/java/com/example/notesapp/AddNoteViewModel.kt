@@ -38,35 +38,19 @@ class AddNoteViewModel : ViewModel() {
         if(noteId != null) {
             editNote(noteId, title, content)
         }else {
-            bitmap?.let {
-                val imageRef: StorageReference = FirebaseStorage.getInstance().reference.child("users/${noteId}.jpg")
-                val bos = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
-                val data = bos.toByteArray()
-                imageRef.putBytes(data)
-                    .addOnSuccessListener {
-                        imageRef.downloadUrl.addOnSuccessListener {
-                            addNewNote(title, content , it.toString())
-                        }.addOnFailureListener {
-                            resourceLD.postValue(NoteResource.OnError(errorMsg))
-                        }
-                    }
-                    .addOnFailureListener{
-                        resourceLD.postValue(NoteResource.OnError(errorMsg))
-                    }
-            } ?: run {
-                addNewNote(title, content , "")
-            }
+            addNewNote(title, content ,bitmap)
         }
     }
 
-    private fun addNewNote(title: String, content: String ,bitmap: String?) {
-
+    private fun addNewNote(title: String, content: String ,bitmap: Bitmap?) {
+        val bos = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+        val data = bos.toByteArray()
 
         val note = Note(
             title = title,
             content = content,
-            img = bitmap,
+            img = data.toString(),
             author = sharedPreferences.user?.id ?: DEFAULT_USER_ID
         )
 
@@ -105,10 +89,10 @@ class AddNoteViewModel : ViewModel() {
     }
 
     fun listenToNotesChangesWithOutUser() {
-     //   var userId = sharedPreferences.user?.id ?: DEFAULT_USER_ID
+        //   var userId = sharedPreferences.user?.id ?: DEFAULT_USER_ID
         val db = FirebaseFirestore.getInstance()
         db.collection("notes")
-           // .whereEqualTo("author", userId) // Filter by userId or author
+            // .whereEqualTo("author", userId) // Filter by userId or author
             .addSnapshotListener { snapshots, e ->
                 if (e != null) {
                     resourceLD.postValue(NoteResource.OnError("Listen failed: ${e.message}"))

@@ -73,8 +73,8 @@ class MyListNotesFragment : Fragment() {
         notesAdapter = NotesAdapter(viewModel.notesList, object : NoteActionListener {
             override fun onEditClicked(noteId: String) {
                 AddNoteFragment.noteToEdit = viewModel.notesList.find { it.id == noteId }
-               // findNavController().navigate(R.id.action_listNotesFragment_to_addNoteFragment)
-             }
+                // findNavController().navigate(R.id.action_listNotesFragment_to_addNoteFragment)
+            }
 
             override fun onDeleteClicked(noteId: String) {
                 viewModel.deleteNote(noteId)
@@ -118,11 +118,13 @@ class MyListNotesFragment : Fragment() {
         fun bind(note: Note) {
             titleTextView.text = note.title
             contentTextView.text = note.content
-            if(note.img!=null){
-                // Convert byte array to Bitmap
-                val bitmap = BitmapFactory.decodeByteArray(note.img.toByteArray(), 0, note.img.toByteArray().size)
-                ivImg.setImageBitmap(bitmap)
-            }
+//            val bitmap = note.img?.let {
+//                val bytes = it.toByteArray()
+//                BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+//            }
+
+            //ivImg.setImageBitmap(bitmap)
+            // ivImg.tag =note.img
             ivEdit.tag = note.id
             ivDelete.tag = note.id
         }

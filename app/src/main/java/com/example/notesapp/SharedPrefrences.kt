@@ -29,7 +29,7 @@ var SharedPreferences.user : User?
     set(value) {
         _user = value
         editSharedPreferences { editor ->
-            editor.put(KEY_User to (value?.toJson()?:""))
+            editor.put(KEY_User to (value?.toJson()))
         }
     }
 
