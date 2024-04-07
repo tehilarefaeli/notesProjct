@@ -1,5 +1,6 @@
 package com.example.notesapp
 
+import android.graphics.BitmapFactory
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -46,7 +47,7 @@ class MyListNotesFragment : Fragment() {
 
         binding.addNote.setOnClickListener {
             AddNoteFragment.noteToEdit = null
-            //findNavController().navigate(R.id.action_listNotesFragment_to_addNoteFragment)
+            findNavController().navigate(R.id.action_navigation_my_notes_to_addNoteFragment)
         }
 
         viewModel.resourceLD.observe(viewLifecycleOwner) { resource ->
@@ -99,6 +100,7 @@ class MyListNotesFragment : Fragment() {
         private val contentTextView: TextView = view.findViewById(R.id.note_content)
         private val ivDelete: ImageView = view.findViewById(R.id.iv_delete)
         private val ivEdit: ImageView = view.findViewById(R.id.iv_edit)
+        private val ivImg: ImageView = view.findViewById(R.id.img_content)
         // Populate other views if needed
 
         init {
@@ -116,8 +118,13 @@ class MyListNotesFragment : Fragment() {
         fun bind(note: Note) {
             titleTextView.text = note.title
             contentTextView.text = note.content
-            // Set other views as needed
+//            val bitmap = note.img?.let {
+//                val bytes = it.toByteArray()
+//                BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+//            }
 
+            //ivImg.setImageBitmap(bitmap)
+                // ivImg.tag =note.img
             ivEdit.tag = note.id
             ivDelete.tag = note.id
         }

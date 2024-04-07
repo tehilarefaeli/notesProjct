@@ -27,7 +27,7 @@
     <string name="logout">Log Out</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_dashboard">All Notes</string>
+    <string name="title_notifications">My Notes</string>
     <string name="save">Save</string>
 </resources>

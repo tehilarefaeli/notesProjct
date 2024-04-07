@@ -1,11 +1,18 @@
 package com.example.notesapp
 
+import android.graphics.Bitmap
+import android.media.Image
+import android.provider.MediaStore.Images
+import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.notesapp.activities.ui.main.Resource
 import com.example.notesapp.activities.ui.main.models.Note
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.io.ByteArrayOutputStream
 import java.util.Date
 
 class AddNoteViewModel : ViewModel() {
@@ -13,7 +20,7 @@ class AddNoteViewModel : ViewModel() {
     val resourceLD: MutableLiveData<NoteResource> = MutableLiveData()
     val DEFAULT_USER_ID = "default_user_id"
 
-    fun sharePost(title: String, content: String, noteId: String? = null) {
+    fun sharePost(title: String, content: String, bitmap:Bitmap?, noteId: String? = null) {
         var errorMsg = ""
         if (title.isEmpty()) {
             errorMsg+="Title field is missing.\n"
@@ -31,14 +38,19 @@ class AddNoteViewModel : ViewModel() {
         if(noteId != null) {
             editNote(noteId, title, content)
         }else {
-            addNewNote(title, content)
+            addNewNote(title, content ,bitmap)
         }
     }
 
-    private fun addNewNote(title: String, content: String) {
+    private fun addNewNote(title: String, content: String ,bitmap: Bitmap?) {
+        val bos = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+        val data = bos.toByteArray()
+
         val note = Note(
             title = title,
             content = content,
+            img = data.toString(),
             author = sharedPreferences.user?.id ?: DEFAULT_USER_ID
         )
 
@@ -137,3 +149,6 @@ class AddNoteViewModel : ViewModel() {
 
 
 }
+
+
+

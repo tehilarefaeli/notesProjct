@@ -1,14 +1,20 @@
 package com.example.notesapp
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
+import android.graphics.Bitmap
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.example.notesapp.activities.ui.main.Resource
 import com.example.notesapp.activities.ui.main.models.Note
@@ -18,6 +24,24 @@ import com.example.notesapp.databinding.FragmentCreateProfileBinding
 
 class AddNoteFragment : Fragment() {
     private lateinit var binding : FragmentAddNoteBinding
+    private var bitmap :Bitmap ?= null
+
+
+    private val cameraLauncher : ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()){ result ->
+        if (result.resultCode == Activity.RESULT_OK){
+            bitmap = result.data?.extras?.get("data") as? Bitmap
+            binding.profileImage.setImageBitmap(bitmap)
+        }
+    }
+
+    private val galleryLauncher : ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()){ result ->
+        if (result.resultCode == Activity.RESULT_OK){
+            bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, result.data?.data)
+            binding.profileImage.setImageBitmap(bitmap)
+        }
+    }
 
     companion object {
         var noteToEdit: Note? = null
@@ -58,9 +82,18 @@ class AddNoteFragment : Fragment() {
             viewModel.sharePost(
                 binding.etPostTitle.text.toString(),
                 binding.etPostContent.text.toString(),
+                bitmap,
                 noteToEdit?.id
             )
         }
+        binding.camera.setOnClickListener {
+            openCamera()
+        }
+        binding.gallery.setOnClickListener {
+            openGallery()
+        }
+
+
 
         viewModel.resourceLD.observe(viewLifecycleOwner) { resource ->
             when(resource) {
@@ -85,5 +118,17 @@ class AddNoteFragment : Fragment() {
             }
         }
     }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.type = "image/*"
+        galleryLauncher.launch(intent)
+    }
+
+    private fun openCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraLauncher.launch(intent)
+    }
+
 
 }

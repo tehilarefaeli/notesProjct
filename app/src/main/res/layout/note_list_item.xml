@@ -42,6 +42,17 @@
         android:text=" wrg erg hregwre4 tg4o5t yjun459 t4renjt  ynuiu gt8ht9ut9u t95ug53y59 ui44unui4rn 35yh5e4t yh5 yh5r yh54etr yhe54t yh45e6r uyh46r yu46 yu456t "
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <ImageView
+        android:layout_margin="4dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintTop_toBottomOf="@id/note_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/img_content"
+        android:src="@drawable/baseline_sticky_note_2_24"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
 
     <ImageView android:id="@+id/iv_delete"
         app:layout_constraintEnd_toEndOf="parent"

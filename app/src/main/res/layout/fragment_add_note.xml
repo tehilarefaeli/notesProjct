@@ -13,7 +13,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="8dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/border_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,6 +56,9 @@
 
             android:background="@color/notebackColor">
 
+
+
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPostContent"
                 android:layout_width="match_parent"
@@ -67,6 +70,46 @@
                 android:scrollbars="vertical" />
         </com.google.android.material.textfield.TextInputLayout>
 
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="#FF8E704B"
+            app:cardCornerRadius="15dp">
+
+
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="10dp"
+                android:background="#EAE3E3"
+                android:scaleType="centerCrop"
+                android:src="@drawable/baseline_sticky_note_2_24"
+                app:cardBackgroundColor="#FF8E704B" />
+        </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/camera"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/baseline_add_a_photo_24"/>
+
+            <ImageView
+                android:id="@+id/gallery"
+                android:src="@drawable/baseline_add_photo_alternate_24"
+                android:layout_width="46dp"
+                android:layout_height="46dp"/>
+
+        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSharePost"
